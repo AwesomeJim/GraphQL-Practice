@@ -14,5 +14,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "GraphQL-Practice"
-include(":app")
+include(":ApolloMainGraphQL")
  
