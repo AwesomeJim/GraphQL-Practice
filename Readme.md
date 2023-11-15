@@ -1,0 +1,1 @@
+https://www.apollographql.com/docs/kotlin/tutorial/01-configure-project

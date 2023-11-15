@@ -7,6 +7,7 @@ hilt-plugin = "2.48.1"
 
 # --------SDK--------
 min-sdk = "23"
+securityCrypto = "1.1.0-alpha06"
 target-sdk = "34"
 compile-sdk = "34"
 jvm-target = "17"
@@ -37,6 +38,7 @@ composeUiTooling = "1.4.2"
 navigationComposeVersion = "2.7.5"
 composeViewModel = "2.6.2"
 hiltNavigationCompose = "1.1.0"
+coil-compose = "2.5.0"
 
 
 #--------Others ----------
@@ -61,6 +63,7 @@ runner = "1.5.2"
 # --------androidx--------
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-corektx" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
+androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
@@ -91,6 +94,7 @@ androidx-compose-ui-viewbinding = { module = "androidx.compose.ui:ui-viewbinding
 androidx-lifecycle-viewModelCompose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "composeViewModel" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose" }
 
 # --------Testing--------------
 test-androidx-rules = { module = "androidx.test:rules", version.ref = "rules" }
