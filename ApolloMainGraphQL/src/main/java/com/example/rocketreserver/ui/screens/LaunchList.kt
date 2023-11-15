@@ -41,6 +41,14 @@ fun LaunchList(onLaunchClick: (launchId: String) -> Unit) {
         items(launchList) { launch ->
             LaunchItem(launch = launch, onClick = onLaunchClick)
         }
+        item {
+
+            if (response?.data?.launches?.hasMore == true) {
+                LoadingItem()
+                cursor = response?.data?.launches?.cursor
+            }
+
+        }
     }
 }
 
