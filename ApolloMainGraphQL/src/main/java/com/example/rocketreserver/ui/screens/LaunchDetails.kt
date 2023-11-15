@@ -25,27 +25,24 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.apollographql.apollo3.api.ApolloResponse
 import com.apollographql.apollo3.api.Error
 import com.apollographql.apollo3.exception.ApolloException
 import com.example.rocketreserver.LaunchDetailsQuery
 import com.example.rocketreserver.R
+import com.example.rocketreserver.data.TokenRepository
 import com.example.rocketreserver.remote.apolloClient
 
 @Composable
-fun LaunchDetails(launchId: String) {
-    var response by remember { mutableStateOf<ApolloResponse<LaunchDetailsQuery.Data>?>(null) }
+fun LaunchDetails(launchId: String, navigateToLogin: () -> Unit) {
     var state by remember { mutableStateOf<LaunchDetailsState>(LaunchDetailsState.Loading) }
-
-
     LaunchedEffect(Unit) {
         // response = apolloClient.query(LaunchDetailsQuery(launchId)).execute()
         state = try {
-            response = apolloClient.query(LaunchDetailsQuery(launchId)).execute()
-            if (response!!.hasErrors()) {
-                LaunchDetailsState.ApplicationError(response!!.errors!!)
+            val response = apolloClient.query(LaunchDetailsQuery(launchId)).execute()
+            if (response.hasErrors()) {
+                LaunchDetailsState.ApplicationError(response.errors!!)
             } else {
-                LaunchDetailsState.Success(response!!.data!!)
+                LaunchDetailsState.Success(response.data!!)
 
             }
         } catch (e: ApolloException) {
@@ -58,14 +55,14 @@ fun LaunchDetails(launchId: String) {
     when (val s = state) {
         LaunchDetailsState.Loading -> Loading()
         is LaunchDetailsState.ProtocolError -> ErrorMessage("Oh no... A protocol error happened: ${s.exception.message}")
-        is LaunchDetailsState.Success -> LaunchDetails(s.data)
+        is LaunchDetailsState.Success -> LaunchDetails(s.data, navigateToLogin)
         is LaunchDetailsState.ApplicationError -> ErrorMessage("Oh no... A protocol error happened: ${s.errors}")
     }
 }
 
 @Composable
 
-private fun LaunchDetails(response: LaunchDetailsQuery.Data?) {
+private fun LaunchDetails(response: LaunchDetailsQuery.Data?, navigateToLogin: () -> Unit) {
     Column(
         modifier = Modifier.padding(16.dp)
     ) {
@@ -109,11 +106,35 @@ private fun LaunchDetails(response: LaunchDetailsQuery.Data?) {
             modifier = Modifier
                 .padding(top = 32.dp)
                 .fillMaxWidth(),
-            onClick = { /*TODO*/ }
+            onClick = {
+                onBookButtonClick(
+                    launchId = response?.launch?.id ?: "",
+                    isBooked = response?.launch?.isBooked == true,
+                    navigateToLogin = navigateToLogin
+                )
+            }
         ) {
             Text(text = "Book now")
         }
     }
+}
+
+private fun onBookButtonClick(
+    launchId: String,
+    isBooked: Boolean,
+    navigateToLogin: () -> Unit
+): Boolean {
+    if (TokenRepository.getToken() == null) {
+        navigateToLogin()
+        return false
+    }
+    if (isBooked) {
+        // TODO Cancel booking
+    } else {
+        // TODO Book
+    }
+    return false
+
 }
 
 @Composable
@@ -151,5 +172,5 @@ private sealed interface LaunchDetailsState {
 @Preview(showBackground = true)
 @Composable
 private fun LaunchDetailsPreview() {
-    LaunchDetails(launchId = "42")
+    LaunchDetails(launchId = "42", navigateToLogin = {})
 }
