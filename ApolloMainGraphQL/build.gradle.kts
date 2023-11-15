@@ -2,6 +2,7 @@
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
+    alias(libs.plugins.com.apollographql.apollo3)
 }
 android {
     namespace = "com.example.rocketreserver"
@@ -78,6 +79,7 @@ dependencies {
 
 
     implementation(libs.androidx.security.crypto)
+    implementation(libs.com.apollographql.apollo3.apollo.runtime)
 
     //-----------Testing dependencies-----------
     androidTestImplementation(platform(libs.androidx.compose.bom))
@@ -106,4 +108,10 @@ dependencies {
     androidTestImplementation(libs.turbine)
     androidTestImplementation(libs.mock.android)
     androidTestImplementation(libs.mock.agent)
+}
+
+apollo {
+    service("service") {
+        packageName.set("com.example.rocketreserver")
+    }
 }

@@ -47,6 +47,7 @@ lottieCompose = "6.1.0"
 espresso-core = "3.5.1"
 lifecycle-runtime-ktx = "2.6.2"
 activity-compose = "1.8.0"
+apollographql = "3.8.2"
 
 junit4 = "4.13.2"
 junit = "1.1.5"
@@ -95,6 +96,7 @@ androidx-lifecycle-viewModelCompose = { group = "androidx.lifecycle", name = "li
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose" }
+com-apollographql-apollo3-apollo-runtime = { module = "com.apollographql.apollo3:apollo-runtime", version.ref = "apollographql" }
 
 # --------Testing--------------
 test-androidx-rules = { module = "androidx.test:rules", version.ref = "rules" }
@@ -117,6 +119,7 @@ mock-agent = { group = "io.mockk", name = "mockk-agent", version.ref = "mockk" }
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-android" }
+com-apollographql-apollo3 = { id = "com.apollographql.apollo3", version.ref = "apollographql" }
 
 [bundles]
 androidx = [
