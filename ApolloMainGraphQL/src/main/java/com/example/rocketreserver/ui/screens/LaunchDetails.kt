@@ -1,5 +1,6 @@
 package com.example.rocketreserver.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -125,8 +126,11 @@ private fun onBookButtonClick(
     navigateToLogin: () -> Unit
 ): Boolean {
     if (TokenRepository.getToken() == null) {
+        Log.e("TAG", "onBookButtonClick: ")
         navigateToLogin()
         return false
+    } else {
+        Log.e("TAG", "onBookButtonClick: Booked ")
     }
     if (isBooked) {
         // TODO Cancel booking

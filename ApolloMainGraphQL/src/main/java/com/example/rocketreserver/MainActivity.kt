@@ -3,6 +3,7 @@
 package com.example.rocketreserver
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
@@ -56,13 +57,18 @@ private fun MainNavHost() {
         composable(route = "${NavigationDestinations.LAUNCH_DETAILS}/{${NavigationArguments.LAUNCH_ID}}") { navBackStackEntry ->
             LaunchDetails(launchId = navBackStackEntry.arguments!!.getString(NavigationArguments.LAUNCH_ID)!!,
                 navigateToLogin = {
+                    Log.e("TAG", "navigateToLogin: ")
                     navController.navigate(NavigationDestinations.LOGIN)
                 }
             )
         }
 
         composable(route = NavigationDestinations.LOGIN) {
-            Login()
+            Login(
+                navigateBack = {
+                    navController.popBackStack()
+
+                })
         }
     }
 }
