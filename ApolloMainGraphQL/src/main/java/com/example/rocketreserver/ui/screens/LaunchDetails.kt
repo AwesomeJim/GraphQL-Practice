@@ -19,6 +19,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,10 +29,13 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.apollographql.apollo3.api.Error
 import com.apollographql.apollo3.exception.ApolloException
+import com.example.rocketreserver.BookTripMutation
+import com.example.rocketreserver.CancelTripMutation
 import com.example.rocketreserver.LaunchDetailsQuery
 import com.example.rocketreserver.R
 import com.example.rocketreserver.data.TokenRepository
 import com.example.rocketreserver.remote.apolloClient
+import kotlinx.coroutines.launch
 
 @Composable
 fun LaunchDetails(launchId: String, navigateToLogin: () -> Unit) {
@@ -103,24 +107,40 @@ private fun LaunchDetails(response: LaunchDetailsQuery.Data?, navigateToLogin: (
         }
 
         // Book button
+        val scope = rememberCoroutineScope()
+        var isBooked by remember { mutableStateOf(response?.launch?.isBooked == true) }
+        var loading by remember { mutableStateOf(false) }
         Button(
             modifier = Modifier
                 .padding(top = 32.dp)
                 .fillMaxWidth(),
+            enabled = !loading,
             onClick = {
-                onBookButtonClick(
-                    launchId = response?.launch?.id ?: "",
-                    isBooked = response?.launch?.isBooked == true,
-                    navigateToLogin = navigateToLogin
-                )
+                loading = true
+                scope.launch {
+                    val ok = onBookButtonClick(
+                        launchId = response?.launch?.id ?: "",
+                        isBooked = isBooked,
+                        navigateToLogin = navigateToLogin
+                    )
+                    if (ok) {
+                        isBooked = !isBooked
+                    }
+                    loading = false
+                }
             }
         ) {
-            Text(text = "Book now")
+            if (loading) {
+                SmallLoading()
+            } else {
+                Text(text = if (!isBooked) "Book now" else "Cancel booking")
+
+            }
         }
     }
 }
 
-private fun onBookButtonClick(
+private suspend fun onBookButtonClick(
     launchId: String,
     isBooked: Boolean,
     navigateToLogin: () -> Unit
@@ -129,15 +149,25 @@ private fun onBookButtonClick(
         Log.e("TAG", "onBookButtonClick: ")
         navigateToLogin()
         return false
-    } else {
-        Log.e("TAG", "onBookButtonClick: Booked ")
     }
-    if (isBooked) {
-        // TODO Cancel booking
+    val mutation = if (isBooked) {
+        CancelTripMutation(id = launchId)
     } else {
-        // TODO Book
+        BookTripMutation(id = launchId)
     }
-    return false
+    val response = try {
+        apolloClient.mutation(mutation).execute()
+    } catch (e: ApolloException) {
+        Log.w("LaunchDetails", "Failed to book/cancel trip", e)
+        return false
+
+    }
+    if (response.hasErrors()) {
+        Log.w("LaunchDetails", "Failed to book/cancel trip: ${response.errors?.get(0)?.message}")
+        return false
+    }
+    return true
+
 
 }
 
