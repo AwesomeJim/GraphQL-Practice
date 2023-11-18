@@ -13,13 +13,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val apolloClient: ApolloClient
+    apolloClient: ApolloClient
 ) : ViewModel() {
     companion object {
         const val TIMEOUT_MILLIS = 5_000L
     }
 
-
+    /**
+     * Listen to Trip booking event using Apollo subscriptions
+     * converting the flow to a stateFlow
+     */
     val getSubscriptions: StateFlow<String?> =
         apolloClient.subscription(TripsBookedSubscription()).toFlow().map { tripBookedResponse ->
             when (tripBookedResponse.data?.tripsBooked) {
