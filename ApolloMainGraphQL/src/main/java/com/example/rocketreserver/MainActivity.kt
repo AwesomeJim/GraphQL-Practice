@@ -34,7 +34,9 @@ import com.example.rocketreserver.ui.screens.LaunchDetails
 import com.example.rocketreserver.ui.screens.LaunchList
 import com.example.rocketreserver.ui.screens.Login
 import com.example.rocketreserver.ui.theme.RocketReserverTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

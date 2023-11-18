@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.com.apollographql.apollo3)
+    alias(libs.plugins.com.google.dagger.hilt)
+    id(libs.plugins.com.google.devtools.ksp.get().pluginId)
 }
 android {
     namespace = "com.example.rocketreserver"
@@ -48,7 +50,8 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
-    packagingOptions {
+
+    packaging {
         resources {
             excludes += listOf(
                 "/META-INF/{AL2.0,LGPL2.1}",
@@ -58,11 +61,26 @@ android {
         }
     }
 
+
+    testOptions {
+        packaging {
+            jniLibs {
+                useLegacyPackaging = true
+            }
+        }
+        unitTests.isReturnDefaultValues = true
+    }
+
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
         kotlinOptions {
             jvmTarget = libs.versions.jvm.target.get()
             suppressWarnings = true
         }
+    }
+
+    hilt {
+        enableAggregatingTask = true
+        enableExperimentalClasspathAggregation = true
     }
 }
 
@@ -76,6 +94,11 @@ dependencies {
 
     //-----------COIL--------------------
     implementation(libs.coil.compose)
+
+    // --------Hilt Dependency Injection--------------
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
+    ksp(libs.hilt.android.compiler)
 
 
     implementation(libs.androidx.security.crypto)
