@@ -26,15 +26,18 @@ import com.apollographql.apollo3.api.Optional
 import com.example.rocketreserver.LaunchListQuery
 import com.example.rocketreserver.R
 import com.example.rocketreserver.remote.apolloClient
+import com.example.rocketreserver.ui.MainViewModel
 
 @Composable
-fun LaunchList(onLaunchClick: (launchId: String) -> Unit) {
+fun LaunchList(
+    onLaunchClick: (launchId: String) -> Unit,
+    mainViewModel: MainViewModel
+) {
     var cursor: String? by remember { mutableStateOf(null) }
     var response: ApolloResponse<LaunchListQuery.Data>? by remember { mutableStateOf(null) }
     var launchList by remember { mutableStateOf(emptyList<LaunchListQuery.Launch>()) }
     LaunchedEffect(cursor) {
         response = apolloClient.query(LaunchListQuery(Optional.present(cursor))).execute()
-        //Log.d("LaunchList", "Success ${response.data}")
         launchList = launchList + response?.data?.launches?.launches?.filterNotNull().orEmpty()
     }
     LazyColumn {

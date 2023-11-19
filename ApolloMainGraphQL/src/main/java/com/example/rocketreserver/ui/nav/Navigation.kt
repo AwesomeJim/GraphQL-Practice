@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.rocketreserver.ui.MainViewModel
 import com.example.rocketreserver.ui.screens.LaunchDetails
 import com.example.rocketreserver.ui.screens.LaunchList
 import com.example.rocketreserver.ui.screens.Login
@@ -21,14 +22,15 @@ object NavigationArguments {
 
 
 @Composable
-fun MainNavHost() {
+fun MainNavHost(mainViewModel: MainViewModel) {
     val navController = rememberNavController()
     NavHost(navController, startDestination = NavigationDestinations.LAUNCH_LIST) {
         composable(route = NavigationDestinations.LAUNCH_LIST) {
             LaunchList(
                 onLaunchClick = { launchId ->
                     navController.navigate("${NavigationDestinations.LAUNCH_DETAILS}/$launchId")
-                }
+                },
+                mainViewModel
             )
         }
 

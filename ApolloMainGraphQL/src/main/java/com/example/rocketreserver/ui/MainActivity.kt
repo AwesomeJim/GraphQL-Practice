@@ -36,21 +36,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             RocketReserverTheme {
                 val snackbarHostState = remember { SnackbarHostState() }
-//                val tripBookedFlow =
-//                    remember { apolloClient.subscription(TripsBookedSubscription()).toFlow() }
-//                val tripBookedResponse: ApolloResponse<TripsBookedSubscription.Data>? by tripBookedFlow.collectAsState(
-//                    initial = null
-//                )
                 val subscriptionState =
                     mainViewModel.getSubscriptions.collectAsStateWithLifecycle().value
 
                 LaunchedEffect(subscriptionState) {
-//                    if (tripBookedResponse == null) return@LaunchedEffect
-//                    val message = when (tripBookedResponse!!.data?.tripsBooked) {
-//                        null -> "Subscription error"
-//                        -1 -> "Trip cancelled"
-//                        else -> "Trip booked! 🚀"
-//                    }
                     subscriptionState?.let {
                         snackbarHostState.showSnackbar(
                             message = it,
@@ -63,7 +52,7 @@ class MainActivity : ComponentActivity() {
                     snackbarHost = { SnackbarHost(snackbarHostState) }
                 ) { paddingValues ->
                     Box(Modifier.padding(paddingValues)) {
-                        MainNavHost()
+                        MainNavHost(mainViewModel)
                     }
                 }
             }
