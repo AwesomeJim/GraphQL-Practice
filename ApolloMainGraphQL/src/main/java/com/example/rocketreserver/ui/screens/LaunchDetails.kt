@@ -195,7 +195,7 @@ private fun SmallLoading() {
 }
 
 private sealed interface LaunchDetailsState {
-    object Loading : LaunchDetailsState
+    data object Loading : LaunchDetailsState
     data class ProtocolError(val exception: ApolloException) : LaunchDetailsState
     data class ApplicationError(val errors: List<Error>) : LaunchDetailsState
 
