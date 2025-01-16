@@ -1,8 +1,8 @@
 [versions]
 # --------plugins--------
-android-gradle-plugin = "8.4.0"
+android-gradle-plugin = "8.8.0"
 kotlin-android = "1.9.23"
-hilt-plugin = "2.51.1"
+hilt-plugin = "2.55"
 ksp = "1.9.23-1.0.20"
 
 
@@ -15,51 +15,51 @@ jvm-target = "17"
 buildToolsVersion = "33.0.2"
 
 # --------Hilt --------
-hiltAndroidCompiler = "2.51.1"
-hiltAndroidTesting = "2.51.1"
+hiltAndroidCompiler = "2.55"
+hiltAndroidTesting = "2.54"
 hilt-nav-compose = "1.2.0"
 
 
 # --------androidx--------
-androidx-corektx = "1.13.1"
+androidx-corektx = "1.15.0"
 androidx-test = "1.5.0"
-androidx-test-espresso = "3.5.1"
-androidx-test-ext-junit = "1.1.5"
+androidx-test-espresso = "3.6.1"
+androidx-test-ext-junit = "1.2.1"
 androidx-test-ext-truth = "1.5.0"
-lifecycleVersion = "2.7.0"
+lifecycleVersion = "2.8.7"
 
 
 # --------Jetpack Compose--------
 compose-compiler = "1.5.3"
 composeVersion = "1.4.2"
 coreTestingVersion = "2.2.0"
-androidx-compose-bom = "2024.05.00" #Compose  Compose Bill of Materials (BOM)
-androidx-activity-compose = "1.9.0"
+androidx-compose-bom = "2025.01.00" #Compose  Compose Bill of Materials (BOM)
+androidx-activity-compose = "1.10.0"
 composeUi = "1.3.1"
 composeUiTooling = "1.4.2"
-navigationComposeVersion = "2.7.7"
-composeViewModel = "2.7.0"
+navigationComposeVersion = "2.8.5"
+composeViewModel = "2.8.7"
 hiltNavigationCompose = "1.2.0"
-coil-compose = "2.6.0"
+coil-compose = "2.7.0"
 
 
 #--------Others ----------
 timber = "5.0.1"
 lottieCompose = "6.1.0"
-espresso-core = "3.5.1"
-lifecycle-runtime-ktx = "2.7.0"
-activity-compose = "1.9.0"
-apollographql = "3.8.4"
+espresso-core = "3.6.1"
+lifecycle-runtime-ktx = "2.8.7"
+activity-compose = "1.10.0"
+apollographql = "3.8.5"
 
 junit4 = "4.13.2"
 junit = "4.13.2"
-truth = "1.4.2"
+truth = "1.4.4"
 testingcore = "2.2.0"
 coroutines = "1.7.3"
-turbine = "1.1.0"
-mockk = "1.13.10"
-rules = "1.5.0"
-runner = "1.5.2"
+turbine = "1.2.0"
+mockk = "1.13.16"
+rules = "1.6.1"
+runner = "1.6.2"
 
 
 [libraries]
